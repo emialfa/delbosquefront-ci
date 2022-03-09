@@ -1,0 +1,21 @@
+export const productTest = {
+    richDescription: '',
+    image: "https://res.cloudinary.com/delbosque-tienda/image/upload/v1626669258/k8cupsfkmputw0zjboub.jpg",
+    images: [],
+    brand: '',
+    price: 300,
+    category: "Línea Cartoon",
+    type: "Prendedores",
+    rating: undefined,
+    numReviews: undefined,
+    isFeatured: false,
+    _id: "614f69f7b67f9e948ac820f3",
+    name: "Zuko - Avatar Aang",
+    countInStock: 50,
+    __v: 0,
+    like: false,
+    description: "Prendedor de forma circular.<br>Medidas 25mm x 25mm",
+    dateCreated: new Date,
+    id: "614f69f7b67f9e948ac820f3",
+    quantity: 2   
+}
