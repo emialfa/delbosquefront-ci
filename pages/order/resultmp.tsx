@@ -63,7 +63,8 @@ const PaymentResultMP:NextPage = ({categories}:InferGetStaticPropsType<typeof ge
     const [statusRes, setStatusRes] = useState(false)
     const [status, setStatus] = useState(false)
     const [message, setMessage] = useState('')
-    const {user} = useAppSelector(state => state.userReducer)
+    const { user } = useAppSelector(state => state.userReducer)
+
     useEffect(() => {
         const getStatus = async () => {
             getMPStatus(window.location.search)
@@ -77,6 +78,7 @@ const PaymentResultMP:NextPage = ({categories}:InferGetStaticPropsType<typeof ge
                 }
                 setStatus(true)
                 setStatusRes(true)
+                console.log(user)
                 updateOrder(form, user)
                 .then(resOrder => {
                     setTimeout(() => {
@@ -122,10 +124,13 @@ const PaymentResultMP:NextPage = ({categories}:InferGetStaticPropsType<typeof ge
             }) 
             .catch(err => console.log(err))
         }
+        if (user){
             getStatus()         
-    }, [])
+        }
+    }, [user])
     return (
         <PrivateRoutes>
+        {statusRes ? <>
         <Head>
             <title>{status ? 'Finalización de compra' : 'Error en el proceso de pago'} | Del Bosque Bordados - Tienda</title>
         </Head>
@@ -140,7 +145,9 @@ const PaymentResultMP:NextPage = ({categories}:InferGetStaticPropsType<typeof ge
                 <Message> {message}
             </Message>}
         </Wrapper>
-        </Container>
+        </Container></>: <Head>
+            <title>'cargando...' | Del Bosque Bordados - Tienda</title>
+        </Head>}
         </PrivateRoutes> 
     )
 }

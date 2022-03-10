@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import close from '../../public/assets/x.png'
 import Image from 'next/image'
@@ -43,16 +43,14 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 3.5rem 1.15rem 2.5rem 1.15rem;
+    padding: 3.5rem 1.15rem 1.3rem 1.15rem;
     z-index: 2;
     transform: translate(-50%, -50%);
 
     @media (max-width: 700px){
-        margin-left: -172px;
         width: 344px;
         overflow-y: scroll;
         justify-content: center;
-        position: absolute;
     }
 `
 const FormWrapper = styled.form`
@@ -122,11 +120,23 @@ const GoogleRegister = styled.button`
     place-content: end;
     text-indent: 26px;
     white-space: nowrap;
+    cursor: pointer;
+
     &:hover {
         opacity: 0.7;
     }
 `
+const Politics = styled.p`
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 14px;
+    color: white;
+    cursor:pointer;
 
+    &:hover{
+        opacity: 0.7;
+    }
+`
 const Close = styled.div`
     top: 19px;
     right: 19px;
@@ -385,10 +395,13 @@ const Register:NextPage = (props: InferGetStaticPropsType<typeof getStaticProps>
             <FacebookLogin
                 appId={props.facebookId}
                 autoLoad={false}
+                disableMobileRedirect={true}
                 fields="name,email"
+                scope="public_profile,email"
                 textButton="Ingresar con Facebook"
                 callback={responseFacebook} 
                 />
+            <Politics onClick={() => router.push('/privacypolicies')}>Políticas de privacidad de los usuarios</Politics>
             <Close onClick={() => router.push("/")}><Image src={close} alt="close" width={19} height={19}/></Close>               
             </Wrapper>
         </Container>

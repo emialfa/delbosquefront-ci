@@ -22,7 +22,7 @@ export const getOrders = async (token:string) =>{
 
 export const updateOrder = async (form:any, token: string) => { 
     try{
-        const res = await axios.put(URL_API +'orders/mpprefenceid', form, {headers:{ Authorization : `Bearer ${token}`}})
+        const res = await axios.post(URL_API +'orders/mpprefenceid', form, {headers:{ Authorization : `Bearer ${token}`}})
         return res.data;
     } catch (err) {
         throw err;

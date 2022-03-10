@@ -41,7 +41,7 @@ const Wrapper = styled.form`
     display: flex;
     flex-direction: column; 
     align-items:center;
-    padding: 2.8rem 3.25rem 2rem 3.25rem;    
+    padding: 2.8rem 3.25rem 1rem 3.25rem;    
     z-index: 2;
     transform: translate(-50%, -50%);
 `
@@ -132,8 +132,21 @@ const GoogleRegister = styled.button`
     place-content: flex-end;
     text-indent: 26px;
     white-space: nowrap;
-
+    cursor: pointer;
+    
     &:hover {
+        opacity: 0.7;
+    }
+`
+
+const Politics = styled.p`
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 14px;
+    color: white;
+    cursor:pointer;
+
+    &:hover{
         opacity: 0.7;
     }
 `
@@ -299,11 +312,13 @@ const Login: NextPage = (props: InferGetStaticPropsType<typeof getStaticProps>) 
             <FacebookLogin
                 appId={props.facebookId}
                 autoLoad={false}
+                disableMobileRedirect={true}
                 fields="name,email"
+                scope="public_profile,email"
                 textButton="Ingresar con Facebook"
                 callback={responseFacebook} 
                 />
-
+            <Politics onClick={() => router.push('/privacypolicies')}>Políticas de privacidad de los usuarios</Politics>
             <Close onClick={() => router.push("/")}><Image  src={close}  alt="" width={19} height={19} /></Close>
             </Wrapper>
         </Container>

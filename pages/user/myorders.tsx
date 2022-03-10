@@ -103,44 +103,41 @@ const UserOrders:NextPage = ({categories}:InferGetStaticPropsType<typeof getStat
     const { user } = useAppSelector(state => state.userReducer)
     const router = useRouter()
     useEffect(() => {
-        if(!user){
-            router.push("/")
-        }
-        else{
-        getOrders(user)
-        .then(res => {
-            const ordersArr:any[] = []
-            res.map((o:IOrder) => {
-                
-                var dateFormat = new Date(`${o.dateOrdered}`); // M-D-YYYY
-		        var d = dateFormat.getDate();
-		        var m = dateFormat.getMonth();
-		        var y = dateFormat.getFullYear();
-                const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
-		        const date = (d <= 9 ? '0' + d : d) + ' de ' + months[m] + ' - ' + y;
+        if(user){
+            getOrders(user)
+            .then(res => {
+                const ordersArr:any[] = []
+                res.map((o:IOrder) => {
+                    
+                    var dateFormat = new Date(`${o.dateOrdered}`); // M-D-YYYY
+                    var d = dateFormat.getDate();
+                    var m = dateFormat.getMonth();
+                    var y = dateFormat.getFullYear();
+                    const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
+                    const date = (d <= 9 ? '0' + d : d) + ' de ' + months[m] + ' - ' + y;
 
-                const items =  JSON.parse(o.orderItems)
-                const price = `$${items.total} ($${items.subtotal} + $${items.shippingCost} Envío)`
-                const orderProducts:string[] = []
-                const orderImages:string[] = []
-                items.cart.map((p:IProduct) => {
-                    orderProducts.push(p.name)
-                    orderImages.push(p.image)
+                    const items =  JSON.parse(o.orderItems)
+                    const price = `$${items.total} ($${items.subtotal} + $${items.shippingCost} Envío)`
+                    const orderProducts:string[] = []
+                    const orderImages:string[] = []
+                    items.cart.map((p:IProduct) => {
+                        orderProducts.push(p.name)
+                        orderImages.push(p.image)
+                    })
+                    orderImages.length= orderImages.length > 4 ? 4 : orderImages.length
+                    const obj = {
+                        date,
+                        price,
+                        products: orderProducts.join(" + "),
+                        images: orderImages,
+                        id: o._id,
+                    }
+                    ordersArr.push(obj) 
                 })
-                orderImages.length= orderImages.length > 4 ? 4 : orderImages.length
-                const obj = {
-                    date,
-                    price,
-                    products: orderProducts.join(" + "),
-                    images: orderImages,
-                    id: o._id,
-                }
-                ordersArr.push(obj) 
-            })
-            setOrders(ordersArr)})
-        .catch(err => console.log(err))
+                setOrders(ordersArr)})
+            .catch(err => console.log(err))
         }
-    },[])
+    },[user])
 
     return (
         <>

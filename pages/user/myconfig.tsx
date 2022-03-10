@@ -235,14 +235,11 @@ const UserConfig:NextPage = ({categories}:InferGetStaticPropsType<typeof getStat
     const rePassword =  useRef<HTMLInputElement>(null)
 
     useEffect(() => {
-        if(!user){
-            router.push('/')
+        if(user){
+            getProfile(user)
+                .then(res =>  setUserData(res))
         }
-        else if(user){
-        getProfile(user)
-        .then(res =>  setUserData(res))
-        }
-    },[])
+    },[user])
 
     const handleUpdate = async () => {
         const form = {

@@ -28,7 +28,8 @@ const RemoveToLocalCart = ( product:IProduct, token:string ) => ({
 })
 
 const EmptyCart = (token:string) => ({
-    type: 'EMPTY_CART'
+    type: 'EMPTY_CART',
+    token
 })
 
 const AddShipping = (cost:number, zip:number, city:string) => ({

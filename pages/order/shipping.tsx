@@ -162,12 +162,6 @@ const ShippingPage:NextPage = ({categories}:InferGetStaticPropsType<typeof getSt
     const zip1 = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
-        if (!user) {
-            router.push('/')
-        }
-    },[])
-
-    useEffect(() => {
         const fetchData = async () => {
             getProfile(user)
             .then((res) => {
@@ -179,8 +173,10 @@ const ShippingPage:NextPage = ({categories}:InferGetStaticPropsType<typeof getSt
             })
             .catch(err => console.log(err))
         }
-        fetchData()
-    },[])
+        if (user) {
+            fetchData()
+        }
+    },[user])
 
     const handleShippingCost = async () => {
         if (!hideAddress){

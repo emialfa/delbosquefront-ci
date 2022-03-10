@@ -132,11 +132,11 @@ const UserFavorites:NextPage = ({categories}:InferGetStaticPropsType<typeof getS
     const [singleProduct, setsingleProduct] = useState<any>({})
     
     useEffect(() => {
-      if(router.query.singleproduct){
-        const product = products.filter((p:IProduct) => p._id === router.query.singleproduct)[0]
-        setsingleProduct(product)
-      } 
-    },[router.query])
+        if(user && router.query.singleproduct){
+            const product = products.filter((p:IProduct) => p._id === router.query.singleproduct)[0]
+            setsingleProduct(product)
+        } 
+    },[router.query, user])
     
     const handleRemoveProduct = (product:IProduct) => dispatch(UpdateFavorites(product.id, user))
 

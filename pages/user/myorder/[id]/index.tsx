@@ -270,14 +270,16 @@ const UserSingleOrder:NextPage = () => {
     const categories = {lines: categoriesList, types: typesList}
 
     useEffect(() => {
-        getOneOrder(`${params.id}`, user)
-        .then(res => {
-            res.orderItems = JSON.parse(res.orderItems)
-            setOrder(res)
-            res.paymentMPStatus !== "Aprobado" && res.paymentMPStatus !== "approved" && res.paymentMPStatus !== "in_process" && res.paymentMPStatus !== "Pendiente de aprobación" && res.status !== "Aprobado" ? setButtonPayment(true) : setButtonPayment(false)
-        })
-        .catch(err => console.log(err))
-    },[params.id])
+        if (user){
+            getOneOrder(`${params.id}`, user)
+            .then(res => {
+                res.orderItems = JSON.parse(res.orderItems)
+                setOrder(res)
+                res.paymentMPStatus !== "Aprobado" && res.paymentMPStatus !== "approved" && res.paymentMPStatus !== "in_process" && res.paymentMPStatus !== "Pendiente de aprobación" && res.status !== "Aprobado" ? setButtonPayment(true) : setButtonPayment(false)
+            })
+            .catch(err => console.log(err))
+        }
+    },[params.id, user])
 
     useEffect(() => {
         if(router.query.payment === 'back') {

@@ -12,7 +12,7 @@ export const saveLocal = (cart: any, token: string) =>{
 
 export const getUserCart = async (token:string) =>{
     const res = await axios.get(URL_API + 'cart', {headers:  { Authorization : `Bearer ${token}`}})
-    if(res.data.cart.length > 0){
+    if(res.data.cart.length){
         localStorage.setItem('cart', res.data.cart);
         const cart = JSON.parse(res.data.cart)
         return cart;
