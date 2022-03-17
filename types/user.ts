@@ -14,6 +14,7 @@ export interface IUser {
     shippingAdress?: string;
     activation?: boolean;
     favorites: string[];
+    _id?: string;
 }
 
 export interface IUserWithShippingAddressObject {

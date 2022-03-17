@@ -1,6 +1,5 @@
 import axios from "axios";
 import {URL_API} from '../store/constants'
-import { IOrder } from "../types/order";
 import { IProduct } from "../types/product";
 
 export const saveOneOrder = async (form:any, token:string) =>{

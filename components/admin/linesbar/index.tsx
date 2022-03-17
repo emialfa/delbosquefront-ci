@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ICategory } from "../../types/categories";
-import { IType } from "../../types/types";
+import { ICategory } from "../../../types/categories";
+import { IType } from "../../../types/types";
 
 const Container = styled.section`
   display: flex;
@@ -52,20 +52,20 @@ interface Props {
 }
 const LinesBar:React.FC<Props> = (props) => {
   const router = useRouter();
-  const { name } = router.query;
+  const name  = router.query.category;
 
   return (
     <>
       <Container key="linesBar">
         <Link
           key="todosLink"
-          href={`/category/all`}
+          href={`/admin/products?category=all`}
         >
           <a className="hover">
             <Category
               key={`Todos`}
-              $background={name === undefined || name === "all" || ((`${name}`).search("category") === -1 && router.pathname.search("products") != -1) ? 1 : 0}
-              $color={name === undefined || name === "all" || ((`${name}`).search("category") === -1 && router.pathname.search("products") != -1) ? 1 : 0}
+              $background={name === undefined || name === "all" ? 1 : 0}
+              $color={name === undefined || name === "all" ? 1 : 0}
             >
               Todos
             </Category>
@@ -74,13 +74,13 @@ const LinesBar:React.FC<Props> = (props) => {
         {props.categories.lines?.map((c, key) => (
           <Link
             key={`link${key}`}
-            href={`/category/${c.name}`}
+            href={'/admin/products?category='+encodeURIComponent(c.name)} 
           >
             <a className="hover">
               <Category
                 data-test-id='category'
-                $background={name && `${name}`.search(c.name) != -1 ? 1 : 0}
-                $color={name && `${name}`.search(c.name) != -1 ? 1 : 0}
+                $background={name && `${name}`=== c.name ? 1 : 0}
+                $color={name && `${name}` === c.name ? 1 : 0}
                 key={`cat${key}`}
               >
                 {c.name}

@@ -2,16 +2,21 @@ import { useRouter } from "next/router"
 import { useAppSelector } from "../../store/hooks"
 import Loader from "../loader"
 
-const PrivateRoutes:React.FC = ({children}) => {
+interface Props {
+  admin?: boolean;
+}
+
+const PrivateRoutes:React.FC<Props> = ({children, admin}) => {
   const router = useRouter()
   // Fetch the user client-side
-  const { user } = useAppSelector(state => state.userReducer)
-  console.log(user)
+  const { user, isAdmin } = useAppSelector(state => state.userReducer)
   // Server-render loading state
   if(user === undefined) {
     router.push('/auth/login')
   }
-
+  if (admin && !isAdmin && user){
+    router.push('/')
+  }
   if (!user) {
     return <Loader />
   }

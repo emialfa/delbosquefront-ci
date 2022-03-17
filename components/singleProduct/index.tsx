@@ -351,7 +351,6 @@ const SingleProduct:React.FC<Props> = ({product, closeUrl}) => {
     return (arr.indexOf(product._id, 0) >= 0 ? true : false)}}
   const favorites = useAppSelector((state) => favorito(state.favoritesReducer))
   const {user} = useAppSelector((state) => state.userReducer)
-  console.log(product)
   const toggleFav = () => {
     !favorites && setHideFavNotification(true)
     dispatch(UpdateFavorites(product._id, user))

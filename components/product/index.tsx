@@ -8,7 +8,6 @@ import { useRouter } from 'next/router'
 import { IProduct } from '../../types/product'
 import { useAppSelector } from '../../store/hooks'
 import { useDispatch } from 'react-redux'
-import Link from 'next/link'
 
 const Container = styled.div`
     display:flex;
@@ -101,11 +100,10 @@ const Notification = styled.div`
 `
 interface Props {
     product:IProduct;
-    admin?:string; 
     handleDelete?:(id:string) => void;
 }
 
-const Product: React.FC<Props> = ({product, admin, handleDelete}) => {
+const Product: React.FC<Props> = ({product, handleDelete}) => {
     const dispatch = useDispatch()
     const [hideNotification, setHideNotification] = useState(false);
     const [url, seturl] = useState({})
@@ -134,7 +132,8 @@ const Product: React.FC<Props> = ({product, admin, handleDelete}) => {
     },[router.query])
 
     const handleProductDetail = (id:string) => {
-        router.push(url, `/product/${product._id}`, {shallow: true, scroll: false})
+        if (handleDelete) return router.push(url, url, {shallow:true, scroll: false})
+        router.push(url, `/product/${id}`, {shallow: true, scroll: false})
     }
     return (
         <Container data-test-id='product'>
@@ -145,9 +144,9 @@ const Product: React.FC<Props> = ({product, admin, handleDelete}) => {
             <Category onClick={() => handleProductDetail(product._id)}>{'"'+product.category+'"'}</Category>
             <FootContainer>
                 <Price onClick={() => handleProductDetail(product._id)}>${product.price}</Price>
-                {admin ? <FavButton className='hover' onClick={() => handleDelete ? handleDelete(product._id+""): ''}>  
+                {handleDelete ? <FavButton className='hover image-container' onClick={() => handleDelete(`${product._id}`)}>  
                 <FavImg style={{display:"flex"}}>
-                    <Image src={admin} alt="Delete" />
+                    <Image src='/assets/removeProduct.svg' alt="Delete" width={17} height={19} />
                 </FavImg>
                 </FavButton> :
                     <FavButton className='hover image-container' onClick={toggleFav}>

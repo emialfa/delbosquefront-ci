@@ -139,7 +139,7 @@ const GoogleRegister = styled.button`
     }
 `
 
-const Politics = styled.p`
+const Policies = styled.p`
     font-weight: 300;
     font-size: 12px;
     line-height: 14px;
@@ -193,6 +193,7 @@ const Login: NextPage = (props: InferGetStaticPropsType<typeof getStaticProps>) 
                 password: password.current?.value
             }
             const res = await userLogin(form)
+            res && setMessage('¡Ingreso exitoso!')
             if(res.regtoken) return router.push('/auth/mailconfirm?regtoken='+ res.regtoken)
             setIsFetching(false)
             setHide(true)
@@ -318,7 +319,7 @@ const Login: NextPage = (props: InferGetStaticPropsType<typeof getStaticProps>) 
                 textButton="Ingresar con Facebook"
                 callback={responseFacebook} 
                 />
-            <Politics onClick={() => router.push('/privacypolicies')}>Políticas de privacidad de los usuarios</Politics>
+            <Policies onClick={() => router.push('/privacypolicies')}>Políticas de privacidad de los usuarios</Policies>
             <Close onClick={() => router.push("/")}><Image  src={close}  alt="" width={19} height={19} /></Close>
             </Wrapper>
         </Container>

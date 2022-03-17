@@ -17,7 +17,6 @@ export default function App({ Component, pageProps }: AppProps) {
   const verifyUser = useCallback(() => {
     userRefreshToken()
     .then(async (response) => {
-      console.log(response)
       if (response.statusText === "OK") {
         const data = response.data
         store.dispatch(login(data.token, data.isAdmin)) 

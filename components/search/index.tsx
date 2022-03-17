@@ -52,11 +52,11 @@ const Ul = styled.ul<{active: boolean}>`
     z-index: 1;
     background-color: white;
 `
-
 interface Props {
     autocomplete?:string;
+    admin?:boolean;
 }
-const Search: React.FC<Props> = ({autocomplete}) => {
+const Search: React.FC<Props> = ({autocomplete, admin}) => {
     const [search, setSearch] = useState<IProduct[]>([]);
     const products = useAppSelector(state => state.productsReducer);
 
@@ -83,7 +83,7 @@ const Search: React.FC<Props> = ({autocomplete}) => {
             <SearchComponent name="search" autoComplete="off" placeholder="Buscar" onChange={handleSearch} onBlur={handleBlur}/></form>
             <Ul className="dropdown-menu" id="dropdown" aria-labelledby="dropdownMenuButton1" active={search.length > 0 ? true : false}>
                 {search.map((p)=> (
-                    <SearchProducts product={p}  key={`productS${p.id}`} />
+                    <SearchProducts product={p}  key={`productS${p.id}`} admin={admin}/>
                 ))}
             </Ul>
             

@@ -51,9 +51,10 @@ const Price = styled.p`
 `
 interface Props {
     product: IProduct;
+    admin?: boolean;
 }
 
-const SearchProducts: React.FC<Props> = ({product}) => {
+const SearchProducts: React.FC<Props> = ({product, admin}) => {
     const router = useRouter()
     const [url, seturl] = useState({})
     
@@ -69,6 +70,7 @@ const SearchProducts: React.FC<Props> = ({product}) => {
     },[router.query])
 
     const handleProductDetail = (id:string) => {
+        if(admin) return router.push(url, url,{shallow: true})
         router.push(url, `/product/${product._id}`, {shallow: true})
     }
     return (

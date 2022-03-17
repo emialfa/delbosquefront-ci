@@ -6,11 +6,19 @@ import combineReducers  from './reducers/index'
 let store:any
 
 function initStore(initialState:any) {
-  return createStore(
-    combineReducers,
-    initialState,
-    composeWithDevTools(applyMiddleware(thunkMiddleware))
-  )
+  if (process.env.NODE_ENV === 'production'){
+    return createStore(
+      combineReducers,
+      initialState,
+      applyMiddleware(thunkMiddleware)
+    )
+  } else {
+    return createStore(
+      combineReducers,
+      initialState,
+      composeWithDevTools(applyMiddleware(thunkMiddleware))
+    )
+  }
 }
 
 export const initializeStore = (preloadedState:any) => {

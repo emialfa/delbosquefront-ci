@@ -3,4 +3,5 @@ export interface IType {
     icon?:string;
     color?:string;
     categories: string[];
+    _id?: string;
 }

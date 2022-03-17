@@ -146,7 +146,7 @@ const PaymentResultMP:NextPage = ({categories}:InferGetStaticPropsType<typeof ge
             </Message>}
         </Wrapper>
         </Container></>: <Head>
-            <title>'cargando...' | Del Bosque Bordados - Tienda</title>
+            <title>cargando... | Del Bosque Bordados - Tienda</title>
         </Head>}
         </PrivateRoutes> 
     )
