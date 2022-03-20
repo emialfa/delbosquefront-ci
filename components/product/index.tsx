@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import { IProduct } from '../../types/product'
 import { useAppSelector } from '../../store/hooks'
 import { useDispatch } from 'react-redux'
+import Like from '../icons/Like'
 
 const Container = styled.div`
     display:flex;
@@ -150,8 +151,7 @@ const Product: React.FC<Props> = ({product, handleDelete}) => {
                 </FavImg>
                 </FavButton> :
                     <FavButton className='hover image-container' onClick={toggleFav}>
-                    <FavImg style={favorites ? {display:"none"} : {display:"flex"}}><Image src={favIconOff} alt="Add to favorites"/></FavImg>
-                    <FavImg style={favorites ? {display:"flex"} : {display:"none"}}><Image src={favIConOn} alt="Remove of favorites" /></FavImg>
+                    <Like value={favorites} />
                 </FavButton>
                 }
             </FootContainer>

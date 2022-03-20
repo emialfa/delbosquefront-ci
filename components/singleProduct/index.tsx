@@ -9,6 +9,7 @@ import { useRouter}  from 'next/router'
 import Image from 'next/image'
 import { useAppSelector } from "../../store/hooks";
 import { IProduct } from "../../types/product";
+import Like from "../icons/Like";
 
 const Container = styled.div``;
 
@@ -74,6 +75,12 @@ const FavButton = styled.div`
   margin-top: -0.9rem;
   margin-right: 13px;
 `;
+const LikeContainer = styled.div`
+  &:hover{
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+`
 const FavImg = styled.img`
   object-fit: cover;
   object-position: center center;
@@ -439,15 +446,9 @@ const SingleProduct:React.FC<Props> = ({product, closeUrl}) => {
                 <Triangle2 />
                 <SharedOptions><SharedImg src='/assets/whatsappIconWhite.svg' onClick={handleSharedWsp}/><SharedImg src='/assets/facebookIconWhite.svg' onClick={handleSharedFb} /></SharedOptions>
               </WrapperShared>}
-              <div onClick={toggleFav}>
-              <FavImg
-                src='/assets/fav-btn.svg'
-                style={favorites ? { display: "none" } : { display: "block" }}
-              ></FavImg>
-              <FavImg
-                src='/assets/fav-btn-on.svg'
-                style={favorites ? { display: "block", paddingBottom: '3px' } : { display: "none" }}
-              ></FavImg></div>            
+              <LikeContainer onClick={toggleFav} style={favorites ? {} : { marginTop: '6px'}}>
+                <Like value={favorites} />
+              </LikeContainer>            
               {hideFavNotification && 
               <WrapperNotification1>
                 <Triangle1 />

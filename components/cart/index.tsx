@@ -9,6 +9,7 @@ import { IProduct } from '../../types/product'
 import { ISucursalCA } from '../../types/sucursalCA'
 import Image from 'next/image'
 import ProductCart from '../productCart'
+import CloseIcon from '../icons/CloseIcon'
 
 
 const Container = styled.div<{hide: number}>`
@@ -158,7 +159,7 @@ const Cart: React.FC<Props> = ( {hide, setHide}) => {
         zipValue.length === 4 && getApiShippingCost(zipValue).then((res: ISucursalCA[]) => {
             const codPostalNumber:number = +(res[0].codpostal);
             res.length > 0 ?
-            res[0].codpostal !== '8000' ? dispatch(addShipping(420, codPostalNumber, res[0].localidad)) : dispatch(addShipping(0, codPostalNumber, res[0].localidad))
+            res[0].localidad !== 'BAHIA BLANCA' ? dispatch(addShipping(420, codPostalNumber, res[0].localidad)) : dispatch(addShipping(0, codPostalNumber, res[0].localidad))
             : dispatch(addShipping(0, 0 , 'Sin sucursal'))})
         .catch(err => console.log(err))
     }
@@ -172,7 +173,7 @@ const Cart: React.FC<Props> = ( {hide, setHide}) => {
     return (
         <Container data-testid="container" hide={hide ? 1 : 0} className='animate-fadeInRight'>
             <Top>
-                <Close onClick={handleClose}><Image src="/assets/cerrar.svg" alt='Close' width={13} height={13}></Image></Close>
+                <Close onClick={handleClose}><CloseIcon /></Close>
                 <Title>Mi Carrito</Title>
                 <Separator />
                 <ProductsContainer>

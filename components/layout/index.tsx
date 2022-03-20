@@ -13,7 +13,7 @@ interface Props {
     };
 }
 
-const Layout: React.FC<Props> = ({children, categories, }) => {
+const Layout: React.FC<Props> = ({children, categories}) => {
   return <>
         <Navbar categories={categories} />
         <main>

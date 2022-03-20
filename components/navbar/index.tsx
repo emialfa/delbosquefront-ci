@@ -16,7 +16,11 @@ import { useRouter } from "next/router"
 import { ICategory } from "../../types/categories"
 import { IType } from "../../types/types"
 import { useAppSelector } from "../../store/hooks"
-
+import IgLogo from '../icons/Ig'
+import Logo from "../icons/Logo"
+import CartIconSvg from "../icons/CartIcon"
+import MenuIcon from "../icons/MenuIcon"
+import ShippingIcon from "../icons/ShippingIcon"
 const Container = styled.header`
     width: 100%;
     margin-bottom:4rem;
@@ -229,12 +233,12 @@ const Navbar: React.FC<Props> = ({categories}) => {
 
     return (
         <Container>
-            <Topbar><Shipping><Image src="/assets/shippingIcon.svg" alt="Shipping" width={20} height={20} /></Shipping>¡Envíos a todo el país por correo argentino!<Shipping><Image src="/assets/shippingIcon.svg" alt="Shipping" width={20} height={20} /></Shipping></Topbar>
+            <Topbar><Shipping><ShippingIcon /></Shipping>¡Envíos a todo el país por correo argentino!<Shipping><ShippingIcon /></Shipping></Topbar>
             <Wrapper>
                 <Left>
                     <Ig href="https://www.instagram.com/del.bosque.bordados/"  target="_blank" rel="noopener noreferrer">
-                    <Image src="/assets/ig-logo.svg" alt="Instagram" width={24} height={24}/></Ig>
-                    <Menu className='link hover' hide={hideMenu ? 1 : 0}><Image src="/assets/menu.svg" alt="Menu" onClick={handleMenu} width={22} height={18}/></Menu>
+                    <IgLogo /></Ig>
+                    <Menu className='link hover' hide={hideMenu ? 1 : 0}  onClick={handleMenu}><MenuIcon /></Menu>
                     <MenuResponsive hide={hideMenu} setHide={setHideMenu} handleLogout={handleLogout} categories={categories}/>
                 </Left>
                 <Cleft>
@@ -257,7 +261,7 @@ const Navbar: React.FC<Props> = ({categories}) => {
                 <Center className='link hover'>
                     <Link href="/">
                     <a className='link'>
-                        <Image src="/assets/delbosque-logo.svg" alt="Logo" width={102} height={83} onClick={() => router.push('/')} />  
+                        <Logo />  
                     </a>     
                     </Link>            
                 </Center>
@@ -294,7 +298,7 @@ const Navbar: React.FC<Props> = ({categories}) => {
                     <CartContainer onClick={handleCart}>
                         <ProductsCart>{cantProducts > 0 ?  `(${cantProducts}) $${total}` : ''}</ProductsCart>
                         <CartIcon>
-                        <Image src="/assets/cart-logo.svg" alt="Cart" width={30} height={26}/>
+                            <CartIconSvg />
                         </CartIcon>
                     </CartContainer>
                 </Right>
