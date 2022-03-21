@@ -212,6 +212,7 @@ const ImgContainer = styled.div<{slideIndex:number}>`
     backface-visibility: hidden;
     transition: transform .6s ease-in-out;
 `
+const Img = styled.img``
 
 const ButtonLeftContainer = styled.div`
     cursor: pointer;
@@ -419,11 +420,11 @@ const SingleProduct:React.FC<Props> = ({product, closeUrl}) => {
             </GuideButtonsWrapper>
             <CarouselImg >
                 <ImgContainer className='image-container' slideIndex={0 - slideIndex}>
-                    <Image src={product.image} alt={product.name} layout="fill" className='image' ></Image>
+                    <Img src={product.image} alt={product.name} className='image' />
                 </ImgContainer>
                 {Array.isArray(product.images) ? product.images.map((p:string, indice:number) => (
                      <ImgContainer key={'image'+indice+p} className='image-container' slideIndex={indice+1 - slideIndex}>
-                     <Image layout="fill" alt={product.name} className='image' src={p}></Image>
+                     <Img alt={product.name} className='image' src={p} />
                  </ImgContainer>
                 )) : console.log('error')}
             </CarouselImg>

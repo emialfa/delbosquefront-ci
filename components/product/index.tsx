@@ -37,6 +37,9 @@ const ImageContainer = styled.div`
     border-radius: 15px 15px 0px 0px;
     z-index: 0;
 `
+const Img = styled.img`
+
+`
 
 const Title = styled.h3`
     font-weight: 800;
@@ -139,7 +142,7 @@ const Product: React.FC<Props> = ({product, handleDelete}) => {
     return (
         <Container data-test-id='product'>
             <ImageContainer className='image-container' onClick={() => handleProductDetail(product._id)}>
-                <Image src={product.image+""} alt={product.name} layout="fill" className='image' />
+                <Img src={product.image+""} alt={product.name} className='image' />
             </ImageContainer>
             <Title onClick={() => handleProductDetail(product._id)}>{product.name}</Title>
             <Category onClick={() => handleProductDetail(product._id)}>{'"'+product.category+'"'}</Category>
@@ -150,7 +153,7 @@ const Product: React.FC<Props> = ({product, handleDelete}) => {
                     <Image src='/assets/removeProduct.svg' alt="Delete" width={17} height={19} />
                 </FavImg>
                 </FavButton> :
-                    <FavButton className='hover image-container' onClick={toggleFav}>
+                <FavButton className='hover image-container' onClick={toggleFav}>
                     <Like value={favorites} />
                 </FavButton>
                 }
