@@ -24,7 +24,12 @@ const ImageContainer = styled.div`
     border-radius: 5px;
     overflow: hidden;
 `
-
+const Img = styled.img`
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    width: 100%;
+`
 
 const Container = styled.div`
     font-size:13.9px;
@@ -76,7 +81,7 @@ const SearchProducts: React.FC<Props> = ({product, admin}) => {
     return (
         <Li onClick={(e) => handleProductDetail(product._id)}>
             <ImageContainer>
-                <Image src={`${product.image}`} alt={product.name} objectFit="cover" width={70} height={60} />
+                <Img src={`${product.image}`} alt={product.name} />
             </ImageContainer>
             <Container>
                 <Title>{product.name}</Title>
