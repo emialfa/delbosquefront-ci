@@ -7,6 +7,7 @@ import EditUser from '../../components/admin/editUser'
 import { IUser } from '../../types/user'
 import { useAppSelector } from '../../store/hooks'
 import PrivateRoutes from '../../components/privateRoutes'
+import Head from 'next/head'
 
 const UsersContainer = styled.div`
     margin: 0px 8%;
@@ -83,15 +84,20 @@ const UsersListPage:React.FC = () => {
     const router = useRouter()
     const token = useAppSelector(state => state.userReducer.user)
     useEffect(() => { 
-        getAllUsers(token)
-            .then((res: IUser[]) => setUsers(res))
-    }, [])
+        if(token){
+            getAllUsers(token)
+                .then((res: IUser[]) => setUsers(res))
+        }
+    }, [token])
 
     const handleEditUser = (id:string) => {
         router.push('/admin/users?edit='+id)
     }
     return (
         <PrivateRoutes admin={true}>
+            <Head>
+                <title>Admin: Usuarios | DelBosqueBordados-Tienda</title>
+            </Head>
             <Topbar />
             <UsersContainer>
                 <Title>Usuarios registrados</Title>

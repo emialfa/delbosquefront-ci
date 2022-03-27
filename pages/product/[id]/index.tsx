@@ -13,9 +13,9 @@ const ProductPage:NextPage = ({product, products, categories}: InferGetStaticPro
     return (
         <>
           <Layout categories={categories}>
+          <SingleProduct product={product} closeUrl={true} />
           <Products products={products} title="Todos los productos" />
           </Layout>
-          <SingleProduct product={product} closeUrl={true} />
         </>
     )
 }

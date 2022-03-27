@@ -6,8 +6,9 @@ import Layout from '../components/layout'
 import Products from '../components/products'
 import SingleProduct from '../components/singleProduct'
 import Welcome from '../components/welcome'
+import useSingleProductModal from '../hooks/useSingleProductModal'
 import { getAllCategories } from '../services/categories'
-import { getAll } from '../services/products'
+import { getAll, getFeaturedProducts } from '../services/products'
 import { getAllTypes } from '../services/types'
 import { useAppSelector } from '../store/hooks'
 import { ICategory } from '../types/categories'
@@ -19,15 +20,8 @@ const Home: NextPage = ({products, categories}: InferGetStaticPropsType<typeof g
   const router = useRouter()
   const [singleProduct, setsingleProduct] = useState<any>({})
   const [welcome, setWelcome] = useState(false)
-  const allProducts = useAppSelector(state => state.productsReducer)
   const {user} = useAppSelector(state => state.userReducer)
-
-    useEffect(() => {
-      if(router.query.singleproduct){
-        const product = allProducts.filter((p:IProduct) => p._id === router.query.singleproduct)[0]
-        setsingleProduct(product)
-      } 
-    },[router.query])
+  useSingleProductModal(setsingleProduct)
 
     useEffect(()=>{
       if(user && localStorage.first){
@@ -46,9 +40,9 @@ const Home: NextPage = ({products, categories}: InferGetStaticPropsType<typeof g
             <meta property="og:image" itemProp="image" content='https://res.cloudinary.com/delbosque-tienda/image/upload/c_scale,h_299/v1639889237/dbblogo_pyw94n.png' />
       </Head>
       <Layout categories={categories}>
+      {!!router.query.singleproduct && <SingleProduct product={singleProduct}/>}
       <Products title='Productos destacados' products={products}/>
       </Layout>
-      {!!router.query.singleproduct && <SingleProduct product={singleProduct}/>}
       {welcome && <Welcome />}
     </>
   )
@@ -58,7 +52,7 @@ const Home: NextPage = ({products, categories}: InferGetStaticPropsType<typeof g
 export default Home
 
 export const getStaticProps: GetStaticProps = async () => {
-  const products:IProduct[] = await getAll()
+  const products:IProduct[] = await getFeaturedProducts()
   const lines:ICategory[] = await getAllCategories()
   const types:IType[] = await getAllTypes()
   return {props: {products: products, categories: {lines: lines, types: types}}}

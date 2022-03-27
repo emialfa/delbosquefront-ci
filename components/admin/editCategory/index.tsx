@@ -141,6 +141,22 @@ const Save = styled.div`
   margin: 1rem auto 1rem auto;
   width: 60%;
 `
+const CloseButton = styled.div`
+    font-style: normal;
+    font-weight: 200;
+    font-size: 50px;
+    line-height: 17px;
+    color: black;
+    position: fixed;
+    z-index: 6;
+    transform: rotate(45deg);
+    right: 23px;
+    top: 23px;
+    cursor: pointer;
+    &:hover {
+        opacity: 0.7;
+    }
+`
 
 const c = {
     _id: '1',
@@ -222,6 +238,7 @@ const EditCategory:React.FC = () => {
         <>
         <Container>
             <Background onClick={() => router.push('/admin/categories')}/>
+            <CloseButton style={{position: 'absolute', right: '15px', top: '15px', fontSize: '40px'}} onClick={() => router.push('/admin/categories')}>+</CloseButton>
             <Wrapper>
                 <Title>{title}</Title>
                 <OptionWrapper>

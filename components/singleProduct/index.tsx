@@ -1,17 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { UpdateFavorites } from '../../store/actions/favorites'
 import { newLocalProduct } from "../../store/actions/cart";
 import Head from 'next/head'
 import { useRouter}  from 'next/router'
-import Image from 'next/image'
 import { useAppSelector } from "../../store/hooks";
 import { IProduct } from "../../types/product";
 import Like from "../icons/Like";
 
-const Container = styled.div``;
+const Container = styled.section``;
 
 const Background = styled.div`
   position: fixed;
@@ -21,7 +20,7 @@ const Background = styled.div`
   top: 0px;
   z-index: 1;
 `;
-const Wrapper = styled.div`
+const Wrapper = styled.section`
   position: fixed;
   width: 346px;
   box-shadow: 0px 6.32558px 15.814px rgba(0, 0, 0, 0.25);
@@ -53,7 +52,7 @@ const TitlesWrapper = styled.div`
 const Title = styled.h3<{fontSize:number}>`
   font-style: normal;
   font-weight: 800;
-  font-size: ${props => props.fontSize? '18.609px' : '20.609px'};
+  font-size: ${props => props.fontSize? '17.609px' : '20.609px'};
   line-height: 25px;
   color: black;
   margin-bottom: 0.2rem;
@@ -329,7 +328,7 @@ const Triangle2 = styled(Triangle1)`
     transform: translateX(70px);
 `
 const SharedOptions = styled(Notification1)`
-  transform: translateX(36px);
+  transform: translate(36px, -1px);
   padding: 8px 10px;
 `
 const SharedImg = styled.img`
@@ -408,9 +407,7 @@ const SingleProduct:React.FC<Props> = ({product, closeUrl}) => {
         <title> {`${product.name} - ${product.category}`} | Del Bosque Bordados - Tienda</title>
         <meta name="description" content='Prendedor de forma circular. Medidas 25mm x 25mm'></meta>
     </Head>
-    <Container key={`single${product.id}`}>
-      <Background onClick={handleClose}/>
-      (<><Wrapper key={`singleproduct${product.id}`}>
+      <><Wrapper key={`singleproduct${product.id}`}>
         <Slider>
             <GuideButtonsWrapper>
                 <GuideButton onClick={() => setSlideIndex(0)} opacity={slideIndex === 0 ? 1 : .5} />
@@ -467,9 +464,10 @@ const SingleProduct:React.FC<Props> = ({product, closeUrl}) => {
       </WrapperNotification>}
         </DescWrapper>
         <Close onClick={handleClose} src='/assets/cerrar.svg' alt="Close" />
-      </Wrapper></>)
-    </Container>
-    </> : 'No hay product aun'}</>
+      </Wrapper>
+      <Background onClick={handleClose}/>
+      </>
+    </> : null}</>
   );
 };
 

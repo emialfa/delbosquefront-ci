@@ -12,6 +12,7 @@ import { IProduct } from "../../types/product"
 import { NextPage } from "next"
 import { useAppSelector } from "../../store/hooks"
 import PrivateRoutes from "../../components/privateRoutes"
+import Head from "next/head"
 
 const ProductsContainer = styled.div`
     margin: 0px 8%;
@@ -63,6 +64,9 @@ const ProductsPage:NextPage = () => {
 
     return (
         <PrivateRoutes admin={true}>
+            <Head>
+                <title>Admin: Productos | DelBosqueBordados-Tienda</title>
+            </Head>
             <Topbar />
             <Navbar />
             <Search admin={true}/>

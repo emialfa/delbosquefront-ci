@@ -81,7 +81,11 @@ const Sidebar:React.FC<Props> = ({hide, setHide}) => {
             <Wrapper>
             <Title>Admin</Title>
             <Separator />
-            <H3>Dashboard</H3>  
+            <Link  href='/admin/dashboard'>
+            <a className='link'>
+                <H3>Dashboard</H3>  
+            </a>
+            </Link>
             <H3 onClick={() => setHideEcommerce(!hideEcommerce)}>Ecommerce <Arrow hide={hideEcommerce}/></H3>
                 {hideEcommerce && 
                 <div style={{marginLeft: '20px'}}>

@@ -9,6 +9,7 @@ import { useAppSelector } from "../../store/hooks"
 import { IType } from "../../types/types"
 import { ICategory } from "../../types/categories"
 import PrivateRoutes from "../../components/privateRoutes"
+import Head from "next/head"
 
 const Container = styled.div`    
     display: flex;
@@ -81,6 +82,9 @@ const CategoriesPage: NextPage = () => {
 
     return (
         <PrivateRoutes admin={true}>
+             <Head>
+                <title>Admin: Categorías | DelBosqueBordados-Tienda</title>
+            </Head>
             <Topbar />
             <Navbar />
             <Container>

@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { useAppSelector } from '../../store/hooks'
 import { NextPage } from 'next'
 import PrivateRoutes from '../../components/privateRoutes'
+import Head from 'next/head'
 
 const LogoContainer = styled.div`
     display:flex;
@@ -67,6 +68,9 @@ const Submit = styled.button`
     border-radius: .25rem;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     border: none;
+    &:hover{
+        opacity: 0.7;
+    }
 `
 const LoginContainer = styled.div`
     background-color: #99877D;
@@ -116,6 +120,9 @@ const Ingresar = styled.div`
     font-weight: 800;
     font-size: 17.1429px;
     line-height: 21px;
+    &:hover{
+        opacity: 0.7;
+    }
 `
 const Notification = styled.p`
         margin-left: 5rem;
@@ -143,7 +150,7 @@ const Homepage: NextPage = () => {
         }
         else if (res.isAdmin){
             dispatch(login(res.token, res.isAdmin))
-            router.push('/admin/products')
+            router.push('/admin/dashboard')
         }
         })
         .catch((err:any) => {
@@ -157,6 +164,9 @@ const Homepage: NextPage = () => {
     
     return (
         <PrivateRoutes admin={true}>
+                <Head>
+                    <title>Admin: Login | DelBosqueBordados-Tienda</title>
+                </Head>
                 {!ingresar ?
                     (
                         <LoginContainer>

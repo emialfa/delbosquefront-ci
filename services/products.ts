@@ -16,3 +16,12 @@ export const getOneProduct = async (path:string) => {
                 throw err;
         }
 }
+
+export const getFeaturedProducts = async () => {
+        try {
+                const res = await axios.get(URL_API + 'products/get/featuredproducts');
+                return res.data
+        } catch (err) {
+                throw err;
+        }
+}

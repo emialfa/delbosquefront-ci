@@ -10,8 +10,15 @@ import {
     YAxis,
     CartesianGrid,
     Tooltip,
-    ResponsiveContainer,
   } from "recharts";
+import { useAppSelector } from "../../store/hooks";
+import { getOrdersCount, getOrdersWeek, getRevenues, getUsersCount, getUsersWeek, getSixMonths, getOrdersday } from "../../services/admin";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { IOrderWithItemsList } from "../../types/order";
+import { getAdminOrders } from "../../services/orders";
+import OrdersTable from "../../components/admin/ordersTable";
+import Head from "next/head";
 
 const Container = styled.div`
     margin: 0px 8%;
@@ -44,6 +51,7 @@ const Wrapper = styled.div`
 `
 const WidgetContainer = styled.div`
     display: flex;
+    flex-wrap: wrap;
 `
 const Widget = styled.div`
     display: flex;
@@ -52,7 +60,7 @@ const Widget = styled.div`
     background-color: white;
     box-shadow: 0px 3.91413px 9.78532px rgba(0, 0, 0, 0.15);
     border-radius: 19.5706px;
-    margin: 0px 10px;
+    margin: 10px;
     flex: 1;
     padding: 1rem;
     flex-direction: column;
@@ -66,7 +74,7 @@ const WidgetTitle = styled.div`
     font-weight: 800;
     font-size: 17.6136px;
     line-height: 22px;
-    color: #545454;
+    color: black;
 `
 const Percent = styled.div<{hide: number}>`
     font-weight: 800;
@@ -75,13 +83,13 @@ const Percent = styled.div<{hide: number}>`
     color: ${props => props.hide >= 0 ? '#4CAF50' : '#F25F4B'};
     display: flex;
     justify-content: space-between;
-    width: 40px;
     align-items: center;
 `
 const PercentIconContainer = styled.div`
     display: flex;
     height: 100%;
-    position: relative;
+    align-items: center;
+    padding-right: 3px;
 `
 const PercentIcon = styled.div<{hide: number}>`
     width: 6.99px;
@@ -89,11 +97,8 @@ const PercentIcon = styled.div<{hide: number}>`
     content: '';
 	border-width: ${(props) => props.hide >= 0 ? '.4vmin .4vmin 0 0' : ' 0 0 .4vmin .4vmin'};
     border-style: solid;
-	display: block;
-    transform-origin: 100% 0;
+	display: flex;
     transform: rotate(-45deg);
-    position: absolute;
-    top: ${props => props.hide >= 0 ? '30%' : '20%'};
 `
 const Center = styled.div`
     font-weight: 800;
@@ -112,6 +117,10 @@ const Detail = styled.div`
     line-height: 14px;
     text-decoration-line: underline;
     color: #545454;
+    cursor: pointer;
+    &:hover {
+        opacity: 0.7;
+    }
 `
 const Icon = styled.img`
 
@@ -119,6 +128,7 @@ const Icon = styled.img`
 const GraphicsContainer = styled.div`
     display: flex;
     width: 100%;
+    flex-wrap: wrap;
 `
 const TotalRevenues = styled.div`
     flex: 4;
@@ -177,11 +187,15 @@ const ItemTitle = styled.h3`
     font-size: 14.2089px;
     line-height: 12px;
     color: #545454;
+    text-align: center;
 `
 const ItemBottom = styled.div<{hide:number}>`
     display: flex;
     justify-content: center;
     color: ${props => props.hide >= 0 ? '#4CAF50' : '#F25F4B'};
+    font-weight: 300;
+    font-size: 14.557px;
+    line-height: 12px;
 `
 const ItemAmount = styled.div`
     font-weight: 300;
@@ -199,18 +213,57 @@ const LastMonthsRevenues = styled.div`
     margin: 1rem 10px;
     height: 359px;
 `
+const OrdersContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 7.42081px 14.8416px rgba(0, 0, 0, 0.15);
+    border-radius: 14.8416px;
+    padding: 1rem;
+    margin: 1rem 10px;
+`
 const data = [
-    { name: "Enero", Total: 1200 },
-    { name: "Febrero", Total: 2100 },
-    { name: "Marzo", Total: 800 },
-    { name: "Abril", Total: 1600 },
-    { name: "Mayo", Total: 900 },
-    { name: "Junio", Total: 1700 },
+    { month: "", total: 0 },
+    { month: "", total: 0 },
+    { month: "", total: 0 },
+    { month: "", total: 0 },
+    { month: "", total: 0 },
+    { month: "", total: 0 },
   ];
 
 const Dashboard = () => {
+  const router = useRouter()
+  const { user } = useAppSelector(state => state.userReducer)
+  const [usersCount, setUsersCount] = useState()
+  const [usersWeekPercent, setUsersWeekPercent] = useState()
+  const [ordersCount, setOrdersCount] = useState()
+  const [ordersWeekPercent, setOrdersWeekPercent] = useState()
+  const [ordersDay, setOrdersDay] = useState({ordersDayTotal: 0, percent: 5})
+  const [revenues, setRevenues] = useState()
+  const [sixMonths, setSixMonths] = useState(data)
+  const [lastWeek, setLastWeek] = useState(0)
+  const [lastMonth, setLastMonth] = useState(0)
+  const [lastThreeMonths, setLastThreeMonths] = useState(0)
+  const [orders, setOrders] = useState<IOrderWithItemsList[]>([])
+  useEffect(() => {
+      if (user) {
+          getUsersCount(user).then((r:any) => setUsersCount(r.usersCount))
+          getUsersWeek(user).then((r:any) => setUsersWeekPercent(r.percent))
+          getOrdersCount(user).then((r:any) => setOrdersCount(r.orderCount))
+          getOrdersWeek(user).then((r:any) => {setOrdersWeekPercent(r.percent); setLastWeek(r.lastWeek)})
+          getRevenues(user).then((r:any) => setRevenues(r.revenues))
+          getSixMonths(user).then((r:any) => {setSixMonths(r.ordersSixMonths); setLastMonth(r.lastMonth); setLastThreeMonths(r.lastThreeMonths)})
+          getOrdersday(user).then((r:any) => setOrdersDay(r))
+          getAdminOrders(user).then((r:IOrderWithItemsList[]) => setOrders(r))        
+      }
+  },[user])
+
+    
+
   return (
     <PrivateRoutes admin={true}>
+        <Head>
+            <title>Admin: Dashboard | DelBosqueBordados-Tienda</title>
+        </Head>
         <Topbar />
         <Container>
             <Title>Dashboard</Title>
@@ -219,45 +272,34 @@ const Dashboard = () => {
                     <Widget>
                         <Top>
                             <WidgetTitle>Usuarios</WidgetTitle>
-                            <Percent hide={-20}><PercentIconContainer><PercentIcon hide={-20} /></PercentIconContainer>20%</Percent>
+                            <Percent hide={Number(usersWeekPercent)}><PercentIconContainer><PercentIcon hide={Number(usersWeekPercent)} /></PercentIconContainer>{Number(usersWeekPercent)}%</Percent>
                         </Top>
-                        <Center>15</Center>
+                        <Center>{Number(usersCount)}</Center>
                         <Bottom>
-                            <Detail>Ver todos</Detail>
+                            <Detail onClick={() => router.push('/admin/users')}>Ver todos</Detail>
                             <Icon src='/assets/usersIcon.svg'/>
                         </Bottom>
                     </Widget>
                     <Widget>
                         <Top>
                             <WidgetTitle>Pedidos</WidgetTitle>
-                            <Percent hide={20}><PercentIconContainer><PercentIcon hide={20}/></PercentIconContainer>20%</Percent>
+                            <Percent hide={Number(ordersWeekPercent)}><PercentIconContainer><PercentIcon hide={Number(ordersWeekPercent)} /></PercentIconContainer>{Number(ordersWeekPercent)}%</Percent>
                         </Top>
-                        <Center>15</Center>
+                        <Center>{Number(ordersCount)}</Center>
                         <Bottom>
-                            <Detail>Ver todos</Detail>
+                            <Detail onClick={() => router.push('/admin/orders')}>Ver todos</Detail>
                             <Icon src='/assets/ordersIcon.svg'/>
                         </Bottom>
                     </Widget>
                     <Widget>
                         <Top>
                             <WidgetTitle>Ganancias</WidgetTitle>
-                            <Percent hide={20}><PercentIconContainer><PercentIcon hide={20}/></PercentIconContainer>20%</Percent>
+                            <Percent hide={Number(ordersWeekPercent)}><PercentIconContainer><PercentIcon hide={Number(ordersWeekPercent)} /></PercentIconContainer>{Number(ordersWeekPercent)}%</Percent>
                         </Top>
-                        <Center>15</Center>
+                        <Center>${revenues}</Center>
                         <Bottom>
-                            <Detail>Ver detalle</Detail>
+                            <Detail onClick={() => router.push('/admin/orders')}>Ver detalle</Detail>
                             <Icon src='/assets/revenueIcon.svg' />
-                        </Bottom>
-                    </Widget>
-                    <Widget>
-                        <Top>
-                            <WidgetTitle>Balance</WidgetTitle>
-                            <Percent hide={20}><PercentIconContainer><PercentIcon hide={20}/></PercentIconContainer>20%</Percent>
-                        </Top>
-                        <Center>15</Center>
-                        <Bottom>
-                            <Detail>Ver detalle</Detail>
-                            <Icon src='/assets/balanceIcon.svg'/>
                         </Bottom>
                     </Widget>
                 </WidgetContainer>
@@ -266,37 +308,34 @@ const Dashboard = () => {
                         <WidgetTitle>Ingresos totales</WidgetTitle>
                         <TotalRevenuesBody>
                             <CircularProgressBarContainer>
-                                <CircularProgressbar value={70} text={"70%"} strokeWidth={5}/>
+                                <CircularProgressbar value={Number(ordersDay.percent)} text={ordersDay.percent+"%"} strokeWidth={5}/>
                             </CircularProgressBarContainer>
                         <TotalRevenuesSubtitle>Total de ventas del día</TotalRevenuesSubtitle>
-                        <TotalRevenuesAmount>$800</TotalRevenuesAmount>
+                        <TotalRevenuesAmount>${ordersDay.ordersDayTotal}</TotalRevenuesAmount>
                         <TotalRevenuesDesc>Transacciones procesadas anteriormente. Quizas no figuren los ultimos pagos realizados.</TotalRevenuesDesc>
                         <Summary>
                             <Item>
                                 <ItemTitle>Ultima semana</ItemTitle>
-                                <ItemBottom hide={20}>
-                                    <PercentIconContainer style={{marginRight: '15px'}}>
-                                        <PercentIcon hide={20} />
-                                    </PercentIconContainer>
-                                    <ItemAmount>$500</ItemAmount>
+                                <ItemBottom hide={lastWeek}>
+                                    <PercentIconContainer>
+                                        <PercentIcon hide={lastWeek} />
+                                    </PercentIconContainer>{lastWeek >= 0 ? `$${lastWeek}` : `-$${lastWeek*-1}`}
                                 </ItemBottom>
                             </Item>
                             <Item>
                                 <ItemTitle>Ultimo mes</ItemTitle>
-                                <ItemBottom hide={20}>
-                                    <PercentIconContainer style={{marginRight: '15px'}}>
-                                        <PercentIcon hide={20} />
-                                    </PercentIconContainer>
-                                    <ItemAmount>$1000</ItemAmount>
+                                <ItemBottom hide={lastMonth}>
+                                    <PercentIconContainer>
+                                        <PercentIcon hide={lastMonth} />
+                                    </PercentIconContainer>{lastMonth >= 0 ? `$${lastMonth}` : `-$${lastMonth*-1}`}
                                 </ItemBottom>
                             </Item>
                             <Item>
                                 <ItemTitle>Ultimos 3 meses</ItemTitle>
-                                <ItemBottom hide={20}>
-                                    <PercentIconContainer style={{marginRight: '15px'}}>
-                                        <PercentIcon hide={20} />
-                                    </PercentIconContainer>
-                                    <ItemAmount>$100</ItemAmount>
+                                <ItemBottom hide={lastThreeMonths}>
+                                    <PercentIconContainer>
+                                        <PercentIcon hide={lastThreeMonths} />
+                                    </PercentIconContainer>{lastThreeMonths >= 0 ? `$${lastThreeMonths}` : `-$${lastThreeMonths*-1}`}
                                 </ItemBottom>
                             </Item>
                         </Summary>
@@ -307,7 +346,7 @@ const Dashboard = () => {
                         <AreaChart
                             width={730}
                             height={290}
-                            data={data}
+                            data={sixMonths}
                             margin={{ top: 20, right: 30, left: 0, bottom: 0 }}
                             >
                             <defs>
@@ -316,13 +355,13 @@ const Dashboard = () => {
                                 <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
                                 </linearGradient>
                             </defs>
-                            <XAxis dataKey="name" stroke="gray" />
+                            <XAxis dataKey="month" stroke="gray" />
                             <YAxis />
                             <CartesianGrid strokeDasharray="3 3" className="chartGrid" />
                             <Tooltip />
                             <Area
                                 type="monotone"
-                                dataKey="Total"
+                                dataKey="total"
                                 stroke="#8884d8"
                                 fillOpacity={1}
                                 fill="url(#total)"
@@ -330,6 +369,10 @@ const Dashboard = () => {
                         </AreaChart>
                     </LastMonthsRevenues>
                 </GraphicsContainer>
+                <OrdersContainer>
+                    <WidgetTitle style={{margin: '0.8rem 2rem'}} >Pedidos</WidgetTitle>
+                    <OrdersTable orders={orders} />
+                </OrdersContainer>
             </Wrapper>
         </Container>
     </PrivateRoutes>

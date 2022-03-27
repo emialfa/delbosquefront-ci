@@ -17,7 +17,9 @@ const NavTitle = styled.div`
     cursor: pointer;
     text-align: center;
     margin: 0px 1rem;
-
+    &:hover{
+        opacity: 0.7;
+    }
     @media (max-width: 890px){
         font-size: 20px;
     }

@@ -11,21 +11,14 @@ import { IProduct } from '../../../types/product';
 import { ICategory } from '../../../types/categories';
 import { IType } from '../../../types/types';
 import SingleProduct from '../../../components/singleProduct';
-import { useAppSelector } from '../../../store/hooks';
+import useSingleProductModal from '../../../hooks/useSingleProductModal';
 
 
 const Category: NextPage = ({products, categories}: InferGetStaticPropsType<typeof getStaticProps>) => {
     const router = useRouter()
     const {name} = router.query
     const [singleProduct, setsingleProduct] = useState<any>({})
-    const allProducts = useAppSelector(state => state.productsReducer)
-    
-    useEffect(() => {
-      if(router.query.singleproduct){
-        const product = allProducts.filter((p:IProduct) => p._id === router.query.singleproduct)[0]
-        setsingleProduct(product)
-      } 
-    },[router.query])
+    useSingleProductModal(setsingleProduct)
 
   return (
     <>
@@ -35,9 +28,9 @@ const Category: NextPage = ({products, categories}: InferGetStaticPropsType<type
             <meta property="og:image" itemProp="image" content='https://res.cloudinary.com/delbosque-tienda/image/upload/c_scale,h_299/v1639889237/dbblogo_pyw94n.png' />
         </Head>
         <Layout categories={categories}>   
+        {!!router.query.singleproduct && <SingleProduct product={singleProduct}/>}
          <Products products={products} title={name === 'all' ? 'Todos los productos' : `${name}`} />
         </Layout>
-        {!!router.query.singleproduct && <SingleProduct product={singleProduct}/>}
     </>
   );
 };

@@ -96,3 +96,67 @@ export const deleteProduct = async (path:string, token:string) => {
         throw err;
     }
 }
+
+export const getUsersCount = async (token: string) => {
+    try {
+        const res = await axios.get(URL_API +'users/get/count', {headers: {Authorization : `Bearer ${token}`}});
+        return res.data;
+    } catch (err) {
+        throw err;
+    }
+}
+
+
+export const getUsersWeek = async (token: string) => {
+    try {
+        const res = await axios.get(URL_API +'users/get/week', {headers: {Authorization : `Bearer ${token}`}});
+        return res.data;
+    } catch (err) {
+        throw err;
+    }
+}
+
+export const getOrdersCount = async (token: string) => {
+    try {
+        const res = await axios.get(URL_API +'orders/get/count', {headers: {Authorization : `Bearer ${token}`}});
+        return res.data;
+    } catch (err) {
+        throw err;
+    }
+}
+
+
+export const getOrdersWeek = async (token: string) => {
+    try {
+        const res = await axios.get(URL_API +'orders/get/week', {headers: {Authorization : `Bearer ${token}`}});
+        return res.data;
+    } catch (err) {
+        throw err;
+    }
+}
+
+export const getOrdersday = async (token: string) => {
+    try {
+        const res = await axios.get(URL_API +'orders/get/day', {headers: {Authorization : `Bearer ${token}`}});
+        return res.data;
+    } catch (err) {
+        throw err;
+    }
+}
+export const getRevenues = async (token: string) => {
+    try {
+        const res = await axios.get(URL_API +'orders/get/revenues', {headers: {Authorization : `Bearer ${token}`}});
+        return res.data;
+    } catch (err) {
+        throw err;
+    }
+}
+
+export const getSixMonths = async (token: string) => {
+    try {
+        const res = await axios.get(URL_API +'orders/get/sixmonths', {headers: {Authorization : `Bearer ${token}`}});
+        return res.data;
+    } catch (err) {
+        throw err;
+    }
+}

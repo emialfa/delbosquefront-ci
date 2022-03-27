@@ -299,12 +299,17 @@ const Loader = styled.div`
 `
 const UploadWrapper = styled.div`
     position: absolute;
-    right: 0px;
-    left: 0px;
+    left: 50%;
     top: 1rem;
     z-index:3;
     display:flex;
     justify-content: center;
+    background-color: black;
+    height: 32px;
+    width: 84px;
+    transform: translate(-50%, 0px);
+    border-radius: 12px;
+    opacity: 0.7;
 `
 
 const Upload = styled.input`
@@ -326,6 +331,10 @@ const UploadLabel = styled.label`
   width: 30px;
   height: 30px;
   margin-right: 2rem;
+  z-index: 3;
+  &:hover{
+    opacity: 0.7;
+  }
 `
 const RemoveWrapper = styled.div`
     position: absolute;
@@ -414,6 +423,7 @@ const EditProduct:React.FC = () => {
   const [images, setImages] = useState<any>([])
   const [urls, setUrls] = useState<string[]>([])
   const [hideLoader, setHideLoader] = useState(false)
+  const inputFile = useRef<HTMLInputElement>(null)
   const name = useRef<HTMLInputElement>(null)
   const linea =  useRef<HTMLSelectElement>(null)
   const description =  useRef<HTMLTextAreaElement>(null)
@@ -519,8 +529,8 @@ const EditProduct:React.FC = () => {
       <Wrapper key={`singleproduct${product?.id}`}>
         <Slider>
             <UploadWrapper>
-                <Upload type="file" onChange={uploadImage} multiple/>
-                <UploadLabel></UploadLabel>
+                <Upload type="file" onChange={uploadImage} ref={inputFile} multiple/>
+                <UploadLabel onClick={() => inputFile.current?.click()}></UploadLabel>
                 <RemoveWrapper onClick={removeImage}>
                   <Remove src="/assets/remove.svg"></Remove>
                 </RemoveWrapper>
