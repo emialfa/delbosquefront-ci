@@ -1,5 +1,5 @@
 //URL
-let url = 'http://localhost:5000/api/v1/'
+let url = 'https://delbosquebordados.com.ar/api/v1/'
 
 if(process.env.NEXT_PUBLIC_APP_ENV === 'test') {
     url = 'https://delbosquebordados.com.ar/api/v1/test/'

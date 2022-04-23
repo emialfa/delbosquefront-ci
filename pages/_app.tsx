@@ -33,7 +33,15 @@ export default function App({ Component, pageProps }: AppProps) {
       }
       // call refreshToken every 5 minutes to renew the authentication token.
       setTimeout(verifyUser, 5 * 60 * 1000);
-    }).catch(err => {console.log(err);store.dispatch(login(undefined, false))})
+    }).catch(err => {
+      store.dispatch(login(undefined, false))
+      if (localStorage.cart){
+        store.dispatch(initLocalCart())
+      }
+      if (localStorage.likes){
+        store.dispatch(initLocalFavorites())
+      };
+    })
   }, [store.dispatch]);
 
   useEffect(() => {
