@@ -223,10 +223,14 @@ const Register:NextPage = (props: InferGetStaticPropsType<typeof getStaticProps>
                 }, 4000)
             })
             .catch(err => {
-                setIsFetching(false);      
+                setIsFetching(false)      
+                setMessage('Algo ha fallado...')
                 console.log(err);
-            })
-    }
+                setTimeout(() => {
+                    setMessage('')
+                },4000)
+                })
+        }
 
     const responseGoogle = async (response:any) => {
         console.log(response)

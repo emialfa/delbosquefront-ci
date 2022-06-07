@@ -124,7 +124,7 @@ const UserConfirmReg:NextPage = ({categories}:InferGetStaticPropsType<GetStaticP
     })
         .catch(err => console.log(err))
         setTimeout(()=> {
-            setMessage('')
+            setMessage('Ha ocurrido un error al intentar reenviar el email.')
             setDisabled(false)
         }, 5000)
     }

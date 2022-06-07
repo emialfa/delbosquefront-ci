@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { useRouter } from 'next/router'
 import { IProduct } from '../../types/product'
 import Product from '../product'
 

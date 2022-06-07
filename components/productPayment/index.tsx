@@ -120,7 +120,7 @@ const ProductPayment:React.FC<Props> = ({product, handleAddProduct, handleRemove
     return (
         <Container>
             <ImageContainer>
-                <ProductImage src={product.image} alt=""/>
+                <ProductImage src={`${product.image.substring(0, product.image.search('upload')+7)+'c_scale,w_95/'+product.image.substring(product.image.search('upload')+7)}`} alt=""/>
             </ImageContainer>
             <DescWrapper>
                 <Title>{product.name}</Title>

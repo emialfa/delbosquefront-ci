@@ -11,7 +11,7 @@ const PrivateRoutes:React.FC<Props> = ({children, admin}) => {
   // Fetch the user client-side
   const { user, isAdmin } = useAppSelector(state => state.userReducer)
   // Server-render loading state
-  if(user === undefined) {
+  if (user === undefined) {
     router.push('/auth/login')
   }
   if (admin && !isAdmin && user){

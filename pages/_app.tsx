@@ -11,13 +11,15 @@ import { initLocalCart, initUserCart } from '../store/actions/cart'
 import { initLocalFavorites, initUserFavorites } from '../store/actions/favorites'
 import { userRefreshToken } from '../services/users'
 import HeadLayout from '../components/head'
+import { useRouter } from 'next/router'
 
 export default function App({ Component, pageProps }: AppProps) {
   const store = useStore(pageProps.initialReduxState)
+  const router = useRouter()
   const verifyUser = useCallback(() => {
     userRefreshToken()
     .then(async (response) => {
-      if (response.statusText === "OK") {
+      if (response.statusText === "OK" && response.data.activation) {
         const data = response.data
         store.dispatch(login(data.token, data.isAdmin)) 
         store.dispatch(initUserFavorites(data.token))
@@ -30,6 +32,9 @@ export default function App({ Component, pageProps }: AppProps) {
         if (localStorage.likes){
           store.dispatch(initLocalFavorites())
         };
+        if (!response.data.activation){
+          router.push("/auth/mailconfirm?regtoken="+ response.data.token)
+        }
       }
       // call refreshToken every 5 minutes to renew the authentication token.
       setTimeout(verifyUser, 5 * 60 * 1000);

@@ -1,4 +1,3 @@
-import * as fs from "fs";
 import { GetServerSideProps } from "next";
 import { getAllCategories } from "../services/categories";
 import { getAll } from "../services/products";

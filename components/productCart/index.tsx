@@ -117,7 +117,7 @@ const ProductCart: React.FC<Props> = ({product, handleAddProduct, handleRemoveOn
     return (
         <Container>
             <ImageContainer>
-                <ProductImage src={product.image} alt={product.name} />
+                <ProductImage src={`${product.image.substring(0, product.image.search('upload')+7)+'c_scale,w_95/'+product.image.substring(product.image.search('upload')+7)}`} alt={product.name} />
             </ImageContainer>
             <DescWrapper>
                 <Title>{product.name}</Title>

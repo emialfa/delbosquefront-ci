@@ -1,6 +1,4 @@
 import styled from 'styled-components'
-import favIconOff from '../../public/assets/fav-btn.svg'
-import favIConOn from '../../public/assets/fav-btn-on.svg'
 import { useState, useEffect } from 'react'
 import { UpdateFavorites } from '../../store/actions/favorites'
 import Image from 'next/image'
@@ -142,7 +140,7 @@ const Product: React.FC<Props> = ({product, handleDelete}) => {
     return (
         <Container data-test-id='product'>
             <ImageContainer className='image-container' onClick={() => handleProductDetail(product._id)}>
-                <Img src={product.image+""} alt={product.name} className='image' />
+                <Img src={`${product.image.substring(0, product.image.search('upload')+7)+'c_scale,w_150/'+product.image.substring(product.image.search('upload')+7)}`} alt={product.name} className='image' />
             </ImageContainer>
             <Title onClick={() => handleProductDetail(product._id)}>{product.name}</Title>
             <Category onClick={() => handleProductDetail(product._id)}>{'"'+product.category+'"'}</Category>

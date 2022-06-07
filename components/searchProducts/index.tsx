@@ -81,7 +81,7 @@ const SearchProducts: React.FC<Props> = ({product, admin}) => {
     return (
         <Li onClick={(e) => handleProductDetail(product._id)}>
             <ImageContainer>
-                <Img src={`${product.image}`} alt={product.name} />
+                <Img src={`${product.image.substring(0, product.image.search('upload')+7)+'c_scale,w_70/'+product.image.substring(product.image.search('upload')+7)}`} alt={product.name} />
             </ImageContainer>
             <Container>
                 <Title>{product.name}</Title>

@@ -68,8 +68,10 @@ const Save = styled.div`
   margin: 1rem 1rem 0px 1rem;
   border: 1px solid black;
 `
-
-const EditUser: React.FC = () => {
+interface Props {
+    setupdate: (state:boolean) => void;
+}
+const EditUser: React.FC<Props> = ({setupdate}) => {
     const router = useRouter()
     const [user, setUSer] = useState<IUser>()
     const token = useAppSelector(state => state.userReducer.user)
@@ -81,7 +83,10 @@ const EditUser: React.FC = () => {
 
     const handleDelete = (id:string) => {
         userDelete(id, token)
-        .then(res => router.push('/admin/users'))
+        .then(res => {
+            setupdate(true)
+            router.push('/admin/users');
+        })
         .catch(err => console.log(err))
     }
     return (

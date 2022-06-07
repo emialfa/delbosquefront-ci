@@ -81,12 +81,14 @@ const Td = styled.td`
 
 const UsersListPage:React.FC = () => {
     const [users, setUsers] = useState<IUser[]>([])
+    const [update, setUpdate] = useState<boolean>(false)
     const router = useRouter()
     const token = useAppSelector(state => state.userReducer.user)
     useEffect(() => { 
-        if(token){
+        if(token || update){
             getAllUsers(token)
                 .then((res: IUser[]) => setUsers(res))
+            setUpdate(false)
         }
     }, [token])
 
@@ -124,7 +126,7 @@ const UsersListPage:React.FC = () => {
                     </TBody>
                 </Table>
             </UsersContainer>
-            {router.query.edit && <EditUser />}
+            {router.query.edit && <EditUser setupdate={setUpdate}/>}
         </PrivateRoutes>
     )
 }
