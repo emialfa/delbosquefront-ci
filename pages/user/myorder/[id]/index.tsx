@@ -314,7 +314,8 @@ const UserSingleOrder:NextPage = () => {
                     <NameData>Pago:</NameData>
                    <InputData >{order.paymentStatus == 'No iniciado' ||  order.paymentStatus == 'Pendiente de aprobación' ? order.paymentMPStatus : order.paymentStatus }</InputData>
                 </Row>
-               {buttonPayment && <><MPButton orderMPPreferenceId={`${order?.MPPreferenceId}`} />
+               {buttonPayment && <>
+               {/* <MPButton orderMPPreferenceId={`${order?.MPPreferenceId}`} /> */}
                <BuyButton onClick={(e) => setHidePaymentOptions(true)}>Acordar pago por otro medio</BuyButton></>}
                 </Top>
             <Top>

@@ -140,7 +140,10 @@ const Product: React.FC<Props> = ({product, handleDelete}) => {
     return (
         <Container data-test-id='product'>
             <ImageContainer className='image-container' onClick={() => handleProductDetail(product._id)}>
-                <Img src={`${product.image.substring(0, product.image.search('upload')+7)+'c_scale,w_150/'+product.image.substring(product.image.search('upload')+7)}`} alt={product.name} className='image' />
+                <picture style={{width: "100%"}}>
+                    <source srcSet={`${product.image.substring(0, product.image.search('upload')+7)+'c_scale,w_250/'+product.image.substring(product.image.search('upload')+7)}`} media="(min-width: 600px)" />
+                    <Img src={`${product.image.substring(0, product.image.search('upload')+7)+'c_scale,w_150/'+product.image.substring(product.image.search('upload')+7)}`} alt={product.name} className='image' />
+                </picture>
             </ImageContainer>
             <Title onClick={() => handleProductDetail(product._id)}>{product.name}</Title>
             <Category onClick={() => handleProductDetail(product._id)}>{'"'+product.category+'"'}</Category>

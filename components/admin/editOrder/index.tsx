@@ -312,7 +312,7 @@ const EditOrder:React.FC = () => {
                 <Row>
                     <NameData>Pago:</NameData>
                     {editOptions ? <>
-                        <Select style={{marginLeft: '-6.5px', padding: '2px 9px'}} defaultValue={order?.paymentStatus == 'No iniciado' ? order?.paymentMPStatus : order?.paymentStatus}> 
+                        <Select ref={selectPayment} style={{marginLeft: '-6.5px', padding: '2px 9px'}} defaultValue={order?.paymentStatus == 'No iniciado' ? order?.paymentMPStatus : order?.paymentStatus}> 
                         <Option value="No iniciado">No iniciado</Option>
                         <Option value="En proceso">En proceso</Option>
                         <Option value="Aprobado">Aprobado</Option>

@@ -193,7 +193,7 @@ const ShippingPage:NextPage = ({categories}:InferGetStaticPropsType<typeof getSt
                 getApiShippingCost(form.zip).then(res => {
                     if (res.length > 0) {
                         dispatch(userShippingAddress(form))
-                        form.zip !== '8000' ? dispatch(addShipping(420, parseInt(res[0].codpostal), res[0].localidad)) : dispatch(addShipping(0, parseInt(res[0].codpostal), res[0].localidad))
+                        form.zip !== '8000' ? dispatch(addShipping(590, parseInt(res[0].codpostal), res[0].localidad)) : dispatch(addShipping(0, parseInt(res[0].codpostal), res[0].localidad))
                         userUpdate(form, user)
                         .catch(err => console.log(err))
                         router.push('/order/payment')
@@ -224,7 +224,7 @@ const ShippingPage:NextPage = ({categories}:InferGetStaticPropsType<typeof getSt
                 getApiShippingCost(form.zip).then(res => {
                     if (res.length > 0) {
                         dispatch(userShippingAddress(form))
-                        dispatch(addShipping(420, parseInt(res[0].codpostal), res[0].localidad))   
+                        dispatch(addShipping(590, parseInt(res[0].codpostal), res[0].localidad))   
                         const obj = {shippingAdress: JSON.stringify(form)}
                         userUpdate(obj, user)
                         .catch(err => console.log(err))
@@ -249,7 +249,7 @@ const ShippingPage:NextPage = ({categories}:InferGetStaticPropsType<typeof getSt
         value.length === 4 &&  getApiShippingCost(value).then(res => {
             if (res.length > 0) {
                 if(res[0].codpostal !== '8000'){
-                    dispatch(addShipping(420, parseInt(res[0].codpostal), res[0].localidad))
+                    dispatch(addShipping(590, parseInt(res[0].codpostal), res[0].localidad))
                 } else {
                     dispatch(addShipping(0, parseInt(res[0].codpostal), res[0].localidad))
                 }

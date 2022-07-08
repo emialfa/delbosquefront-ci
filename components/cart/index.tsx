@@ -159,7 +159,7 @@ const Cart: React.FC<Props> = ( {hide, setHide}) => {
         zipValue.length === 4 && getApiShippingCost(zipValue).then((res: ISucursalCA[]) => {
             const codPostalNumber:number = +(res[0].codpostal);
             res.length > 0 ?
-            res[0].localidad !== 'BAHIA BLANCA' ? dispatch(addShipping(420, codPostalNumber, res[0].localidad)) : dispatch(addShipping(0, codPostalNumber, res[0].localidad))
+            res[0].localidad !== 'BAHIA BLANCA' ? dispatch(addShipping(590, codPostalNumber, res[0].localidad)) : dispatch(addShipping(0, codPostalNumber, res[0].localidad))
             : dispatch(addShipping(0, 0 , 'Sin sucursal'))})
         .catch(err => console.log(err))
     }

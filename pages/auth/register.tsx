@@ -103,7 +103,7 @@ const GoogleRegister = styled.button`
     padding: 10px 17px;
     align-content: center;
     display: flex;
-    margin-top: 1rem;
+    margin: 1rem;
     border: none;
     background: url('https://developers-dot-devsite-v2-prod.appspot.com/identity/sign-in/g-normal.png') transparent 5px 50% no-repeat;
     font-style: normal;
@@ -396,7 +396,7 @@ const Register:NextPage = (props: InferGetStaticPropsType<typeof getStaticProps>
                 onFailure={googleFailure}
                 cookiePolicy={'single_host_origin'}
             />
-            <FacebookLogin
+            {/* <FacebookLogin
                 appId={props.facebookId}
                 autoLoad={false}
                 disableMobileRedirect={true}
@@ -404,7 +404,7 @@ const Register:NextPage = (props: InferGetStaticPropsType<typeof getStaticProps>
                 scope="public_profile,email"
                 textButton="Ingresar con Facebook"
                 callback={responseFacebook} 
-                />
+                /> */}
             <Politics onClick={() => router.push('/privacypolicies')}>Políticas de privacidad de los usuarios</Politics>
             <Close onClick={() => router.push("/")}><Image src={close} alt="close" width={19} height={19}/></Close>               
             </Wrapper>

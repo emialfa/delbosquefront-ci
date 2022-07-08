@@ -141,6 +141,8 @@ const PaymentPage:NextPage = ({categories}:InferGetStaticPropsType<typeof getSta
     
     const handlePayment = (e: React.MouseEvent<HTMLDivElement>, mpbutton: boolean) => {
         if (total > 0){
+        window.alert("Por el momento se encuentra deshabilitado el pago por medio de mercadopago.")
+        return;
         const form = {
             orderItems: JSON.stringify(cartReducer),
             name: shippingAddress.name,
