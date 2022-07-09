@@ -126,9 +126,8 @@ const UserFavorites:NextPage = ({categories}:InferGetStaticPropsType<typeof getS
     const products = useAppSelector(state => state.productsReducer)
     const { user } = useAppSelector(state => state.userReducer)
     const mapFavorites = (arr:any) => arr.length > 0 ?
-        arr.map((p:string) => products.filter((elemento:IProduct) => p === elemento._id)[0]) : null ;  
+        arr.map((p:string) => products.filter((elemento:IProduct) => p === elemento._id)[0]) : null;
     const favorites = useAppSelector(state => mapFavorites(state.favoritesReducer))
-
     const [singleProduct, setsingleProduct] = useState<any>({})
     
     useEffect(() => {

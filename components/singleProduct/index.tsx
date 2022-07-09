@@ -307,6 +307,8 @@ const Notification = styled.div`
   font-weight: 800;
   font-size: 16px;
   line-height: 20px;
+  text-align: center;
+  white-space: nowrap;
 `
 
 const WrapperNotification1 = styled(WrapperNotification)`

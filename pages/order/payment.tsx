@@ -138,11 +138,9 @@ const PaymentPage:NextPage = ({categories}:InferGetStaticPropsType<typeof getSta
     const handleRemoveProduct = (product:IProduct) => {
         dispatch(removeLocalProduct(product, user));
     }
-    
+
     const handlePayment = (e: React.MouseEvent<HTMLDivElement>, mpbutton: boolean) => {
         if (total > 0){
-        window.alert("Por el momento se encuentra deshabilitado el pago por medio de mercadopago.")
-        return;
         const form = {
             orderItems: JSON.stringify(cartReducer),
             name: shippingAddress.name,
@@ -212,8 +210,8 @@ const PaymentPage:NextPage = ({categories}:InferGetStaticPropsType<typeof getSta
                 <SubTitle>Total</SubTitle>
                 <Price>${total}</Price>
             </Wrapper>    
-            <MPButton handlePayment={handlePayment} MPpreferenceId={MPpreferenceId}/>
-            <BuyButton onClick={(e) => setHidePaymentOptions(true)}>Acordar pago por otro medio</BuyButton>
+            {/* <MPButton handlePayment={handlePayment} MPpreferenceId={MPpreferenceId}/> */}
+            <BuyButton onClick={(e) => setHidePaymentOptions(true)}>Acordar pago con el vendedor</BuyButton>
             </Top>
         </Container>
         {hidePaymentOptions && <PaymentOptions handleClick={(e) => handlePayment(e, false)} handleClose={() => setHidePaymentOptions(false)} />}
