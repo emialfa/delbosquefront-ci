@@ -150,8 +150,8 @@ const PaymentPage:NextPage = ({categories}:InferGetStaticPropsType<typeof getSta
             phone: shippingAddress.phone,
             document: shippingAddress.document,
             email: shippingAddress.email,
-            MPbutton: true,
-            MPPreferenceId: MPpreferenceId.current
+            MPbutton: mpbutton ? true : false,
+            MPPreferenceId: mpbutton ? `${MPpreferenceId.current}` : ''
         }
         const saveOrder = async () => {
             if(total > 0){
