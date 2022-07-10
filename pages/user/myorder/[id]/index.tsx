@@ -316,7 +316,7 @@ const UserSingleOrder:NextPage = () => {
                 </Row>
                {buttonPayment && <>
                {/* <MPButton orderMPPreferenceId={`${order?.MPPreferenceId}`} /> */}
-               <BuyButton onClick={(e) => setHidePaymentOptions(true)}>Acordar pago por otro medio</BuyButton></>}
+               <BuyButton onClick={(e) => setHidePaymentOptions(true)}>Acordar pago con el vendedor</BuyButton></>}
                 </Top>
             <Top>
             <Title>Datos del envío</Title>

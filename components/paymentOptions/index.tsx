@@ -82,6 +82,7 @@ const Notification = styled.p`
     font-size: 12px;
     margin-top: auto;
     padding: 0px 17px;
+    margin-bottom: 1rem;
 `
 
 interface Props {

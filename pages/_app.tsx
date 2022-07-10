@@ -12,6 +12,7 @@ import { initLocalFavorites, initUserFavorites } from '../store/actions/favorite
 import { userRefreshToken } from '../services/users'
 import HeadLayout from '../components/head'
 import { useRouter } from 'next/router'
+import * as gtag from '../lib/gtag'
 
 export default function App({ Component, pageProps }: AppProps) {
   const store = useStore(pageProps.initialReduxState)
@@ -74,6 +75,19 @@ export default function App({ Component, pageProps }: AppProps) {
       window.removeEventListener("storage", syncLogout)
     }
   }, [syncLogout])
+  
+  useEffect(() => {
+    const handleRouteChange = (url: any) => {
+      gtag.pageview(url)
+    }
+    router.events.on('routeChangeComplete', handleRouteChange)
+    router.events.on('hashChangeComplete', handleRouteChange)
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange)
+      router.events.off('hashChangeComplete', handleRouteChange)
+    }
+  }, [router.events])
+
 
   return  (<Provider store={store}>
     <HeadLayout>
