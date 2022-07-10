@@ -159,7 +159,7 @@ const PaymentPage:NextPage = ({categories}:InferGetStaticPropsType<typeof getSta
                 .then(res => {
                     console.log(res.order._id)
                     setTimeout(() => {
-                        if (!mpbutton) sendOrderFromWhatsapp(cart, subtotal, shippingCost, total, shippingAddress, shippingAddress.street) 
+                        sendOrderFromWhatsapp(cart, subtotal, shippingCost, total, shippingAddress, shippingAddress.street) 
                         router.push('/user/myorder/'+res.order._id+'?payment=back')
                     }, 500)
                 })

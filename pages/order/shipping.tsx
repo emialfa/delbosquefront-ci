@@ -265,6 +265,7 @@ const ShippingPage:NextPage = ({categories}:InferGetStaticPropsType<typeof getSt
     const handleAddress = () => {
         setHideAddress(!hideAddress)
     }
+    
     return (
         <PrivateRoutes>
         <Head>
